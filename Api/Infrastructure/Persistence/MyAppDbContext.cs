@@ -1,12 +1,14 @@
 using Api.Domain.Entities;
 using Domain;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Api.Infrastructure.Persistence;
 
-public class MyAppDbContext : DbContext
+public class MyAppDbContext : IdentityDbContext<IdentityUser>
 {
     private readonly IPublisher _publisher;
     private readonly ILogger<MyAppDbContext> _logger;
@@ -18,9 +20,12 @@ public class MyAppDbContext : DbContext
         _logger = logger;
 
         _logger.LogDebug("DbContext created.");
+        Database.EnsureCreated();
     }
 
     public DbSet<Product> Products => Set<Product>();
+
+
     public async Task BeginTransactionAsync()
     {
         if (_currentTransaction is not null)

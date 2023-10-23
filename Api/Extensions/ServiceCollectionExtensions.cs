@@ -1,6 +1,7 @@
 using Api.Common.Behaviours;
 using Api.Helpers;
 using Api.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 namespace Api.Extensions;
 
@@ -34,7 +35,10 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration config)
     {
         var connectionString = config.GetConnectionString("Default");
-        services.AddSqlite<MyAppDbContext>(connectionString);
+        services.AddDbContext<MyAppDbContext>(options =>
+        {
+            options.UseSqlServer(connectionString);
+        });
         return services;
     }
 
