@@ -475,3 +475,6 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+Api/mydb.db
+Api/mydb.db-shm
+Api/mydb.db-wal
