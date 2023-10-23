@@ -1,28 +1,26 @@
+using Api.Domain.Entities;
 using Api.Extensions;
+using Api.Helpers;
 using Api.Infrastructure.Persistence;
-using Domain.Entities;
+using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+builder.Services.AddCustomCors();
+builder.Services.AddPersistence(builder.Configuration);
+builder.Services.AddSwagger();
 builder.Services.AddEndpoints();
-builder.Services.AddMediatR(cfg =>
-{
-    cfg.RegisterServicesFromAssembly(typeof(Program).Assembly);
-});
-builder.Services.AddSqlite<MyAppDbContext>(builder.Configuration.GetConnectionString("Default"));
+builder.Services.AddMediator();
+builder.Services.AddValidatorsFromAssemblyContaining(typeof(Program));
+
 
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-app.MapGet("/", () => "Hello World!");
+app.UseCors(AppConstants.CorsPolicy);
+app.MapSwagger();
+app.UseStaticFiles();
 await SeedProducts();
 
 
