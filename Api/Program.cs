@@ -4,7 +4,6 @@ using Api.Helpers;
 using Api.Infrastructure.Persistence.SeedData;
 using Api.Services;
 using FluentValidation;
-using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
