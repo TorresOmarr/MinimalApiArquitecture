@@ -20,7 +20,7 @@ public class MyAppDbContext : IdentityDbContext<IdentityUser>
         _logger = logger;
 
         _logger.LogDebug("DbContext created.");
-        Database.EnsureCreated();
+        Database.Migrate();
     }
 
     public DbSet<Product> Products => Set<Product>();
