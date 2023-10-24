@@ -18,7 +18,8 @@ public class GetProducts : IEndpoint
         })
         .WithName(nameof(GetProducts))
         .WithTags(nameof(Product))
-        .Produces<List<GetProductsQueryResponse>>();
+        .Produces<List<GetProductsQueryResponse>>()
+        .RequireAuthorization("admin_greetings");
 
     }
 }

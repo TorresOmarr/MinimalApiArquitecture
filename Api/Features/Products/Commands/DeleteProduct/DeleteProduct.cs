@@ -22,6 +22,7 @@ public class DeleteProduct : IEndpoint
         .ProducesValidationProblem()
         .Produces(StatusCodes.Status200OK)
         .Produces(StatusCodes.Status404NotFound)
+        .RequireAuthorization("admin_greetings")
         ;
     }
 }

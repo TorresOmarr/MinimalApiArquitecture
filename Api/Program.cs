@@ -1,8 +1,8 @@
-using Api.Domain.Entities;
 using Api.Extensions;
 using Api.Helpers;
-using Api.Infrastructure.Persistence;
+using Api.Infrastructure.Persistence.SeedData;
 using FluentValidation;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,40 +13,19 @@ builder.Services.AddSwagger();
 builder.Services.AddEndpoints();
 builder.Services.AddMediator();
 builder.Services.AddValidatorsFromAssemblyContaining(typeof(Program));
-
+builder.Services.AddIdentity();
+builder.Services.AddPolicies();
+builder.Services.AddJWT(builder.Configuration);
 
 
 var app = builder.Build();
 
 app.UseCors(AppConstants.CorsPolicy);
 app.MapSwagger();
+await SeedData.InitializeDataAsync(app.Services);
 app.UseStaticFiles();
-await SeedProducts();
-
-
+app.UseAuthentication();
+app.UseAuthorization();
 app.MapEndpoints();
-async Task SeedProducts()
-{
-    using var scope = app.Services.CreateScope();
-    var context = scope.ServiceProvider.GetRequiredService<MyAppDbContext>();
 
-    if (!context.Products.Any())
-    {
-        context.Products.AddRange(new List<Product>
-        {
-            new Product
-            {
-                Description = "Product 01",
-                Price = 16000
-            },
-            new Product
-            {
-                Description = "Product 02",
-                Price = 52200
-            }
-        });
-
-        await context.SaveChangesAsync();
-    }
-}
 app.Run();

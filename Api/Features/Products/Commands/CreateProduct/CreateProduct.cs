@@ -4,6 +4,7 @@ using Api.Infrastructure.Persistence;
 using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Features.Products.Commands.CreateProduct;
@@ -18,7 +19,9 @@ public class CreateProduct : IEndpoint
         .WithName(nameof(CreateProduct))
         .WithTags(nameof(Product))
         .ProducesValidationProblem()
-        .Produces(StatusCodes.Status201Created);
+        .Produces(StatusCodes.Status201Created)
+        .RequireAuthorization("admin_greetings")
+        ;
     }
 }
 

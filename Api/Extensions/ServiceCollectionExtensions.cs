@@ -1,7 +1,13 @@
+using System.Text;
 using Api.Common.Behaviours;
 using Api.Helpers;
 using Api.Infrastructure.Persistence;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using NSwag;
+using NSwag.Generation.Processors.Security;
 
 namespace Api.Extensions;
 
@@ -14,6 +20,16 @@ public static class ServiceCollectionExtensions
         {
             c.Title = "Minimal APIs";
             c.Version = "v1";
+            c.Description = "A minimal API example";
+            c.AddSecurity("Bearer", Enumerable.Empty<string>(), new OpenApiSecurityScheme
+            {
+                Type = OpenApiSecuritySchemeType.Http,
+                Scheme = JwtBearerDefaults.AuthenticationScheme,
+                BearerFormat = "JWT",
+                Description = "Type into the textbox: {your JWT token}."
+            });
+            c.OperationProcessors.Add(
+                     new AspNetCoreOperationSecurityScopeProcessor("Bearer"));
         });
 
         return services;
@@ -50,6 +66,45 @@ public static class ServiceCollectionExtensions
             config.AddOpenBehavior(typeof(TransactionBehaviour<,>));
         });
 
+        return services;
+    }
+
+    public static IServiceCollection AddIdentity(this IServiceCollection services)
+    {
+        services
+            .AddIdentityCore<IdentityUser>()
+            .AddRoles<IdentityRole>()
+            .AddEntityFrameworkStores<MyAppDbContext>();
+        return services;
+    }
+
+    public static IServiceCollection AddJWT(this IServiceCollection services, IConfiguration config)
+    {
+        services
+        .AddHttpContextAccessor()
+        .AddAuthorization()
+        .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        .AddJwtBearer(options =>
+        {
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                ValidIssuer = config["Jwt:Issuer"],
+                ValidAudience = config["Jwt:Audience"],
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["Jwt:Key"]!))
+            };
+        });
+        return services;
+    }
+    public static IServiceCollection AddPolicies(this IServiceCollection services)
+    {
+        services.AddAuthorizationBuilder()
+                .AddPolicy("admin_greetings", policy =>
+                policy
+                    .RequireRole("Admin"));
         return services;
     }
 }

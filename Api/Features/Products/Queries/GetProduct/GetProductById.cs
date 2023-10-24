@@ -22,7 +22,8 @@ public class GetProductById : IEndpoint
         })
         .WithName(nameof(GetProductById))
         .WithTags(nameof(Product))
-        .Produces<GetProductByIdQueryResponse>(); ;
+        .Produces<GetProductByIdQueryResponse>()
+        .RequireAuthorization("admin_greetings");
     }
 }
 

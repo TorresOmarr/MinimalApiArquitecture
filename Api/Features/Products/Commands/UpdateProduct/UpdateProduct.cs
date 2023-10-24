@@ -23,7 +23,8 @@ public class UpdateProduct : IEndpoint
         .WithName(nameof(UpdateProduct))
         .WithTags(nameof(Product))
         .Produces(StatusCodes.Status404NotFound)
-        .ProducesValidationProblem();
+        .ProducesValidationProblem()
+        .RequireAuthorization("admin_greetings");
         ;
     }
 }
