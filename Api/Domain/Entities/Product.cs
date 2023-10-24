@@ -4,11 +4,11 @@ using Domain;
 
 namespace Api.Domain.Entities;
 
-public class Product : IHasDomainEvent
+public class Product : BaseEntity, IHasDomainEvent
 {
-    public int ProductId { get; set; }
-    public string Description { get; set; } = default!;
-    public double Price { get; set; }
+    public int ProductId { get; init; }
+    public string Description { get; private set; } = default!;
+    public double Price { get; private set; }
     public List<DomainEvent> DomainEvents { get; set; } = new List<DomainEvent>();
     public Product()
     {

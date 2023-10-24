@@ -1,12 +1,15 @@
+using Api.Common.Interfaces;
 using Api.Extensions;
 using Api.Helpers;
 using Api.Infrastructure.Persistence.SeedData;
+using Api.Services;
 using FluentValidation;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
+builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 builder.Services.AddCustomCors();
 builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddSwagger();
@@ -16,7 +19,6 @@ builder.Services.AddValidatorsFromAssemblyContaining(typeof(Program));
 builder.Services.AddIdentity();
 builder.Services.AddPolicies();
 builder.Services.AddJWT(builder.Configuration);
-
 
 var app = builder.Build();
 
