@@ -52,17 +52,13 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand,
             return Results.ValidationProblem(result.GetValidationProblems());
         }
 
-        var newProduct = new Product
-        {
-            Description = request.Description,
-            Price = request.Price
-        };
+        var newProduct = new Product(0, request.Description, request.Price);
 
         _context.Products.Add(newProduct);
 
         await _context.SaveChangesAsync();
 
-        return Results.Created($"/api/{nameof(Product)}/{newProduct.ProductId}", newProduct);
+        return Results.Created($"/api/{nameof(Product)}/{newProduct.ProductId}", "");
     }
 }
 
