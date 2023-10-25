@@ -1,3 +1,5 @@
+using Api.Common.Interfaces;
+using Api.Domain;
 using Api.Domain.Entities;
 using Domain;
 using MediatR;
@@ -13,13 +15,15 @@ public class MyAppDbContext : IdentityDbContext<IdentityUser>
     private readonly IPublisher _publisher;
     private readonly ILogger<MyAppDbContext> _logger;
     private IDbContextTransaction? _currentTransaction;
+    private readonly CurrentUser _user;
 
-    public MyAppDbContext(DbContextOptions<MyAppDbContext> options, IPublisher publisher, ILogger<MyAppDbContext> logger) : base(options)
+    public MyAppDbContext(DbContextOptions<MyAppDbContext> options, IPublisher publisher, ILogger<MyAppDbContext> logger, ICurrentUserService currentUserService) : base(options)
     {
         _publisher = publisher;
         _logger = logger;
 
         _logger.LogDebug("DbContext created.");
+        _user = currentUserService.User;
         Database.Migrate();
     }
 
@@ -71,6 +75,22 @@ public class MyAppDbContext : IdentityDbContext<IdentityUser>
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
+        foreach (var entry in ChangeTracker.Entries<BaseEntity>())
+        {
+            switch (entry.State)
+            {
+                case EntityState.Added:
+                    entry.Entity.CreatedBy = _user.Id;
+                    entry.Entity.CreatedAt = DateTime.UtcNow;
+                    break;
+
+                case EntityState.Modified:
+                    entry.Entity.LastModifiedBy = _user.Id;
+                    entry.Entity.LastModifiedByAt = DateTime.UtcNow;
+                    break;
+            }
+        }
+
         var result = await base.SaveChangesAsync(cancellationToken);
 
         var events = ChangeTracker.Entries<IHasDomainEvent>()

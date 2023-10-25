@@ -25,16 +25,16 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand,
     }
 
 
-    public async Task<IResult> Handle(CreateProductCommand request, CancellationToken cancellationToken)
+    public async Task<IResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
     {
-        ValidationResult result = _validator.Validate(request);
+        ValidationResult result = _validator.Validate(command);
 
         if (!result.IsValid)
         {
             return Results.ValidationProblem(result.GetValidationProblems());
         }
 
-        var newProduct = new Product(0, request.Description, request.Price);
+        var newProduct = new Product(0, command.Description, command.Price);
 
         _context.Products.Add(newProduct);
 

@@ -58,7 +58,7 @@ public static class ProductRoute
         productsGroup.MapPut("/{productId}", async (int productId, IMediator mediator, UpdateProductCommand command) =>
                 {
                     command.ProductId = productId;
-                    await mediator.Send(command);
+                    return await mediator.Send(command);
 
                 })
                 .Produces(StatusCodes.Status404NotFound)

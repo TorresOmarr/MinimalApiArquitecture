@@ -14,7 +14,6 @@ builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 builder.Services.AddCustomCors();
 builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddSwagger();
-builder.Services.AddEndpoints();
 builder.Services.AddMediator();
 builder.Services.AddValidatorsFromAssemblyContaining(typeof(Program));
 builder.Services.AddIdentity();
@@ -33,6 +32,5 @@ await SeedData.InitializeDataAsync(app.Services);
 app.UseStaticFiles();
 app.UseAuthentication();
 app.UseAuthorization();
-app.MapEndpoints();
 
 app.Run();
