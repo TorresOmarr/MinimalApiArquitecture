@@ -1,31 +1,9 @@
-using Api.Domain.Entities;
-using Api.Extensions;
+
 using Api.Infrastructure.Persistence;
 using MediatR;
 
 namespace Api.Features.Products.Commands.DeleteProduct;
 
-
-public class DeleteProduct : IEndpoint
-{
-    public void MapEndpoint(IEndpointRouteBuilder endpoints)
-    {
-        endpoints.MapDelete($"/api/{nameof(Product)}/{{productId}}", async (int productId, IMediator mediator) =>
-        {
-            var command = new DeleteProductCommand(productId);
-
-            return await mediator.Send(command);
-
-        })
-        .WithName(nameof(DeleteProduct))
-        .WithTags(nameof(Product))
-        .ProducesValidationProblem()
-        .Produces(StatusCodes.Status200OK)
-        .Produces(StatusCodes.Status404NotFound)
-        .RequireAuthorization("admin_greetings")
-        ;
-    }
-}
 
 public class DeleteProductCommand : IRequest<IResult>
 {

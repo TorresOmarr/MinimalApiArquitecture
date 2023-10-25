@@ -7,26 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Api.Features.Products.Queries.GetProducts;
 
 
-public class GetProducts : IEndpoint
-{
-    public void MapEndpoint(IEndpointRouteBuilder endpoints)
-    {
-        endpoints.MapGet($"/api/{nameof(Product)}", async (IMediator mediator) =>
-        {
-            var query = new GetProductsQuery();
-            return await mediator.Send(query);
-        })
-        .WithName(nameof(GetProducts))
-        .WithTags(nameof(Product))
-        .Produces<List<GetProductsQueryResponse>>()
-        ;
-
-    }
-}
-
-public class GetProductsQuery : IRequest<List<GetProductsQueryResponse>>
-{
-}
+public record GetProductsQuery : IRequest<List<GetProductsQueryResponse>>;
 
 public class GetProductsQueryHandler : IRequestHandler<GetProductsQuery, List<GetProductsQueryResponse>>
 {
@@ -53,9 +34,10 @@ public class GetProductsQueryHandler : IRequestHandler<GetProductsQuery, List<Ge
     }
 }
 
-public class GetProductsQueryResponse
+public record GetProductsQueryResponse
 {
     public int ProductId { get; set; }
     public string Description { get; set; } = default!;
     public double Price { get; set; }
 }
+

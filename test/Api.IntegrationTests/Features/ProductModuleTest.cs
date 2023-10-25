@@ -17,10 +17,10 @@ public class ProductsModuleTests : TestBase
         await AddAsync(new Product(0, "Product 1", 10.0));
         await AddAsync(new Product(0, "Product 2", 20.0));
 
-        var client = Application.CreateClient();
+        var (Client, UserId) = await GetClientAsAdmin();
 
         //Act
-        var products = await client.GetFromJsonAsync<List<GetProductsQueryResponse>>($"/api/{nameof(Product)}");
+        var products = await Client.GetFromJsonAsync<List<GetProductsQueryResponse>>($"/api/v1/{nameof(Product)}");
         //Assert
         products.Should().NotBeNullOrEmpty();
         products?.Count.Should().Be(2);
@@ -38,7 +38,7 @@ public class ProductsModuleTests : TestBase
             Price = 10.0
         };
 
-        var response = await Client.PostAsJsonAsync($"/api/{nameof(Product)}", product);
+        var response = await Client.PostAsJsonAsync($"/api/v1/{nameof(Product)}", product);
 
         response.EnsureSuccessStatusCode();
 
@@ -55,7 +55,7 @@ public class ProductsModuleTests : TestBase
             Description = "Product 1",
             Price = 10.0
         };
-        var response = await client.PostAsJsonAsync($"/api/{nameof(Product)}", product);
+        var response = await client.PostAsJsonAsync($"/api/v1/{nameof(Product)}", product);
 
         response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
     }
@@ -70,7 +70,7 @@ public class ProductsModuleTests : TestBase
             Price = 0.0
         };
 
-        var response = await Client.PostAsJsonAsync($"/api/{nameof(Product)}", command);
+        var response = await Client.PostAsJsonAsync($"/api/v1/{nameof(Product)}", command);
 
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
     }

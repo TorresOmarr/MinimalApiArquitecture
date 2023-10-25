@@ -4,26 +4,8 @@ using Api.Infrastructure.Persistence;
 using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Features.Products.Commands.CreateProduct;
-public class CreateProduct : IEndpoint
-{
-    public void MapEndpoint(IEndpointRouteBuilder endpoints)
-    {
-        endpoints.MapPost($"/api/{nameof(Product)}", async ([FromBody] CreateProductCommand command, IMediator mediator) =>
-       {
-           return await mediator.Send(command);
-       })
-        .WithName(nameof(CreateProduct))
-        .WithTags(nameof(Product))
-        .ProducesValidationProblem()
-        .Produces(StatusCodes.Status201Created)
-        .RequireAuthorization("admin_greetings")
-        ;
-    }
-}
 
 public class CreateProductCommand : IRequest<IResult>
 {

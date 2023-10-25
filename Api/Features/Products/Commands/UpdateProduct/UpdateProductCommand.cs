@@ -1,33 +1,10 @@
 
-using Api.Domain.Entities;
 using Api.Extensions;
 using Api.Infrastructure.Persistence;
 using FluentValidation;
 using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using Namotion.Reflection;
 
 namespace Api.Features.Products.Commands.UpdateProduct;
-
-
-public class UpdateProduct : IEndpoint
-{
-    public void MapEndpoint(IEndpointRouteBuilder endpoints)
-    {
-        endpoints.MapPut($"/api/{nameof(Product)}/{{productId}}", async (int productId, IMediator mediator, UpdateProductCommand command) =>
-        {
-            command.ProductId = productId;
-            await mediator.Send(command);
-
-        })
-        .WithName(nameof(UpdateProduct))
-        .WithTags(nameof(Product))
-        .Produces(StatusCodes.Status404NotFound)
-        .ProducesValidationProblem()
-        .RequireAuthorization("admin_greetings");
-        ;
-    }
-}
 
 public class UpdateProductCommand : IRequest<IResult>
 {

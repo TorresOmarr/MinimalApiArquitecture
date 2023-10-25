@@ -1,5 +1,6 @@
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using Api.Features.Auth.Command;
 using Api.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -7,7 +8,6 @@ using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 using Respawn;
 using Respawn.Graph;
-using static Api.Features.Auth.Command.GetTokenUser;
 
 namespace Api.IntegrationTests;
 
@@ -100,8 +100,8 @@ public class TestBase
     {
         using var scope = Application.Services.CreateScope();
         var client = Application.CreateClient();
-        var tokenCommand = new TokenCommand() { UserName = userName, Password = password };
-        var response = await client.PostAsJsonAsync<TokenCommand>("/api/auth/login", tokenCommand);
+        var tokenCommand = new TokenCommand(userName, password);
+        var response = await client.PostAsJsonAsync<TokenCommand>("/api/v1/auth/login", tokenCommand);
         TokenCommandResponse? tokenCommandResponse = await response.Content.ReadFromJsonAsync<TokenCommandResponse>();
         return tokenCommandResponse?.AccessToken;
     }

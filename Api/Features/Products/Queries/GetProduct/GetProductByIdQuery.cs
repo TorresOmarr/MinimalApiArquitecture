@@ -6,31 +6,7 @@ using MediatR;
 namespace Api.Features.Products.Queries.GetProduct;
 
 
-public class GetProductById : IEndpoint
-{
-    public void MapEndpoint(IEndpointRouteBuilder endpoints)
-    {
-        endpoints.MapGet($"/api/{nameof(Product)}/{{productId}}", async (int productId, IMediator mediator) =>
-        {
-            var query = new GetProductByIdQuery
-            {
-                ProductId = productId
-            };
-
-            return await mediator.Send(query);
-
-        })
-        .WithName(nameof(GetProductById))
-        .WithTags(nameof(Product))
-        .Produces<GetProductByIdQueryResponse>()
-        .RequireAuthorization("admin_greetings");
-    }
-}
-
-public class GetProductByIdQuery : IRequest<IResult>
-{
-    public int ProductId { get; set; }
-}
+public record GetProductByIdQuery(int ProductId) : IRequest<IResult>;
 
 public class GetProductQueryHandler : IRequestHandler<GetProductByIdQuery, IResult>
 {

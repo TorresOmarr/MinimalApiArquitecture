@@ -1,5 +1,7 @@
 using Api.Common.Interfaces;
 using Api.Extensions;
+using Api.Features;
+using Api.Features.Products;
 using Api.Helpers;
 using Api.Infrastructure.Persistence.SeedData;
 using Api.Services;
@@ -19,7 +21,11 @@ builder.Services.AddIdentity();
 builder.Services.AddPolicies();
 builder.Services.AddJWT(builder.Configuration);
 
+
 var app = builder.Build();
+
+app.RegisterEndpointsV1();
+
 
 app.UseCors(AppConstants.CorsPolicy);
 app.MapSwagger();
