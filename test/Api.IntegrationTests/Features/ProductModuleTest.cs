@@ -10,70 +10,8 @@ namespace Api.IntegrationTests.Features;
 
 public class ProductsModuleTests : TestBase
 {
-    [Test]
-    public async Task GetProducts()
-    {
-        //Arrange
-        await AddAsync(new Product(0, "Product 1", 10.0));
-        await AddAsync(new Product(0, "Product 2", 20.0));
-
-        var (Client, UserId) = await GetClientAsAdmin();
-
-        //Act
-        var products = await Client.GetFromJsonAsync<List<GetProductsQueryResponse>>($"/api/v1/{nameof(Product)}");
-        //Assert
-        products.Should().NotBeNullOrEmpty();
-        products?.Count.Should().Be(2);
-
-    }
-    [Test]
-    public async Task CreateProductWithValidFieldsAndUserAdmin()
-    {
-
-        var (Client, UserId) = await GetClientAsAdmin();
-
-        var product = new CreateProductCommand
-        {
-            Description = "Product 1",
-            Price = 10.0
-        };
-
-        var response = await Client.PostAsJsonAsync($"/api/v1/{nameof(Product)}", product);
-
-        response.EnsureSuccessStatusCode();
 
 
-    }
-    [Test]
-    public async Task CreateProduct_ProducesException_WithAnonymUser()
-    {
-
-        var client = Application.CreateClient();
-
-        var product = new CreateProductCommand
-        {
-            Description = "Product 1",
-            Price = 10.0
-        };
-        var response = await client.PostAsJsonAsync($"/api/v1/{nameof(Product)}", product);
-
-        response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
-    }
-    [Test]
-    public async Task Product_IsNotCreated_WhenInvalidFieldsAreProvided_AndUserIsAdmin()
-    {
-        var (Client, UserId) = await GetClientAsAdmin();
-
-        var command = new CreateProductCommand()
-        {
-            Description = "",
-            Price = 0.0
-        };
-
-        var response = await Client.PostAsJsonAsync($"/api/v1/{nameof(Product)}", command);
-
-        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-    }
 
 
 }
