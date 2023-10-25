@@ -40,7 +40,7 @@ public static class SeedAuth
                 Name = "Admin"
             });
             var testUser = await userManager.FindByNameAsync("test_user");
-            await userManager.AddToRoleAsync(testUser, "Admin");
+            await userManager.AddToRoleAsync(testUser!, "Admin");
 
 
         }

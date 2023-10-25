@@ -34,9 +34,9 @@ public class TokenCommandHandler : IRequestHandler<TokenCommand, IResult>
     public async Task<IResult> Handle(TokenCommand request, CancellationToken cancellationToken)
     {
         // Verificamos credenciales con Identity
-        var user = await _userManager.FindByNameAsync(request.UserName);
+        var user = await _userManager.FindByNameAsync(request.UserName!);
 
-        if (user is null || !await _userManager.CheckPasswordAsync(user, request.Password))
+        if (user is null || !await _userManager.CheckPasswordAsync(user, request.Password!))
         {
             return Results.Forbid();
         }
