@@ -10,7 +10,7 @@ public static class RegisterEndpoints
     {
         var endpointVersion = endpoints.MapGroup($"api/v1");
 
-        ProductRoute.RegisterProductEndpoints(endpointVersion);
-        AuthRoutes.RegisterAuthEndpoints(endpointVersion);
+        ProductEndpoints.MapGroup(endpointVersion);
+        AuthEndpoints.MapGroup(endpointVersion);
     }
 }

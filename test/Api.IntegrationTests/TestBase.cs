@@ -117,7 +117,6 @@ public class TestBase
     private static async Task EnsureDatabaseAsync(IServiceScope scope)
     {
         var context = scope.ServiceProvider.GetRequiredService<MyAppDbContext>();
-        context.Database.EnsureCreated();
         context.Database.Migrate();
         await SeedRoles(scope);
     }

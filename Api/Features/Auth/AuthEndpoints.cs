@@ -4,9 +4,9 @@ using Api.Features.Auth.Command;
 namespace Api.Features.Auth;
 
 
-public static class AuthRoutes
+public static class AuthEndpoints
 {
-    public static void RegisterAuthEndpoints(IEndpointRouteBuilder endpoints)
+    public static void MapGroup(IEndpointRouteBuilder endpoints)
     {
         var authGroup = endpoints.MapGroup($"/{nameof(Auth)}")
                             .WithTags(nameof(Auth));

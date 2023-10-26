@@ -2,6 +2,7 @@ using System.Text;
 using Api.Common.Behaviours;
 using Api.Helpers;
 using Api.Infrastructure.Persistence;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -62,10 +63,10 @@ public static class ServiceCollectionExtensions
     {
         services.AddMediatR(config =>
         {
-            config.RegisterServicesFromAssembly(typeof(Program).Assembly);
+            config.RegisterServicesFromAssembly(typeof(Api).Assembly);
             config.AddOpenBehavior(typeof(TransactionBehaviour<,>));
-        });
 
+        });
         return services;
     }
 
@@ -105,6 +106,7 @@ public static class ServiceCollectionExtensions
                 .AddPolicy("admin_greetings", policy =>
                 policy
                     .RequireRole("Admin"));
+
         return services;
     }
 }

@@ -1,3 +1,4 @@
+
 using Api.Domain.Entities;
 using Api.Features.Products.Commands.CreateProduct;
 using Api.Features.Products.Commands.DeleteProduct;
@@ -5,14 +6,15 @@ using Api.Features.Products.Commands.UpdateProduct;
 using Api.Features.Products.Queries.GetProduct;
 using Api.Features.Products.Queries.GetProducts;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Features.Products;
 
 
-public static class ProductRoute
+public static class ProductEndpoints
 {
-    public static void RegisterProductEndpoints(IEndpointRouteBuilder endpoints)
+    public static void MapGroup(this IEndpointRouteBuilder endpoints)
     {
         var productsGroup = endpoints.MapGroup($"/{nameof(Product)}")
                             .WithTags(nameof(Product))

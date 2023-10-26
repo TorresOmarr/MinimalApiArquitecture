@@ -6,9 +6,19 @@ using Api.Helpers;
 using Api.Infrastructure.Persistence.SeedData;
 using Api.Services;
 using FluentValidation;
+using Serilog;
+using Serilog.Events;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Host.UseSerilog();
+
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+    .Enrich.FromLogContext()
+    .WriteTo.Console()
+    .WriteTo.File("log.txt", rollingInterval: RollingInterval.Day)
+    .CreateLogger();
 
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 builder.Services.AddCustomCors();
@@ -26,11 +36,35 @@ var app = builder.Build();
 app.RegisterEndpointsV1();
 
 
+
+
 app.UseCors(AppConstants.CorsPolicy);
 app.MapSwagger();
-await SeedData.InitializeDataAsync(app.Services);
 app.UseStaticFiles();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.Run();
+try
+{
+    Log.Information("Iniciando Web API");
+
+    await SeedData.InitializeDataAsync(app.Services);
+
+
+    Log.Information("Corriendo en:");
+    Log.Information("https://localhost:7299");
+    Log.Information("http://localhost:5232");
+
+    app.Run();
+
+}
+catch (Exception ex)
+{
+    Log.Fatal(ex, "Host terminated unexpectedly");
+
+    return;
+}
+finally
+{
+    Log.CloseAndFlush();
+}
