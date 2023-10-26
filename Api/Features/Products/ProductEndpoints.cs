@@ -1,4 +1,5 @@
 
+using Api.Common.Attributes;
 using Api.Domain.Entities;
 using Api.Features.Products.Commands.CreateProduct;
 using Api.Features.Products.Commands.DeleteProduct;
@@ -18,6 +19,7 @@ public static class ProductEndpoints
     {
         var productsGroup = endpoints.MapGroup($"/{nameof(Product)}")
                             .WithTags(nameof(Product))
+                            .AddEndpointFilter<AuditEndpointFilter>()
                             .RequireAuthorization("admin_greetings");
 
 
@@ -26,7 +28,9 @@ public static class ProductEndpoints
             var query = new GetProductsQuery();
             return await mediator.Send(query);
         })
-        .Produces<List<GetProductsQueryResponse>>();
+        .Produces<List<GetProductsQueryResponse>>()
+
+        ;
 
 
 

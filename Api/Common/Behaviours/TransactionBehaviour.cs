@@ -25,9 +25,9 @@ public class TransactionBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequ
 
             return response;
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            _logger.LogError("Request failed: Rolling back all the changes made to the Context");
+            _logger.LogError("Request failed: Rolling back all the changes made to the Context {@Error}", ex.Message);
 
             await _context.RollbackTransaction();
             throw;
