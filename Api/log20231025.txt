@@ -7,3 +7,42 @@
 2023-10-25 22:13:51.391 -06:00 [INF] https://localhost:7299
 2023-10-25 22:13:51.391 -06:00 [INF] http://localhost:5232
 2023-10-25 22:14:19.363 -06:00 [INF] User {"Id":"7c8511e6-527a-4566-953e-f5b0c8a701e4","UserName":"test_user","IsAuthenticated":true,"$type":"CurrentUser"} with request /api/v1/Product and method GET
+2023-10-25 22:25:21.848 -06:00 [INF] Iniciando Web API
+2023-10-25 22:25:23.984 -06:00 [INF] Corriendo en:
+2023-10-25 22:25:23.985 -06:00 [INF] https://localhost:7299
+2023-10-25 22:25:23.985 -06:00 [INF] http://localhost:5232
+2023-10-25 22:47:47.472 -06:00 [INF] Iniciando Web API
+2023-10-25 22:47:49.524 -06:00 [INF] Corriendo en:
+2023-10-25 22:47:49.525 -06:00 [INF] https://localhost:7299
+2023-10-25 22:47:49.525 -06:00 [INF] http://localhost:5232
+2023-10-25 22:48:01.430 -06:00 [INF] User {"Id":"7c8511e6-527a-4566-953e-f5b0c8a701e4","UserName":"test_user","IsAuthenticated":true,"$type":"CurrentUser"} with requestPath /api/v1/Product and method GET
+2023-10-25 22:48:01.489 -06:00 [INF] A new transaction was created with ID "6f81bf25-91db-4eb4-9e1e-e9289940613e"
+2023-10-25 22:48:01.531 -06:00 [INF] Commiting Transaction "6f81bf25-91db-4eb4-9e1e-e9289940613e"
+2023-10-25 22:48:15.029 -06:00 [INF] User {"Id":"7c8511e6-527a-4566-953e-f5b0c8a701e4","UserName":"test_user","IsAuthenticated":true,"$type":"CurrentUser"} with requestPath /api/v1/Product and method GET
+2023-10-25 22:48:15.044 -06:00 [INF] A new transaction was created with ID "d75bbfe2-33c5-4b03-8fac-33a7a5c6fec2"
+2023-10-25 22:48:15.051 -06:00 [INF] Commiting Transaction "d75bbfe2-33c5-4b03-8fac-33a7a5c6fec2"
+2023-10-25 22:49:13.865 -06:00 [INF] Iniciando Web API
+2023-10-25 22:49:15.611 -06:00 [INF] Corriendo en:
+2023-10-25 22:49:15.611 -06:00 [INF] https://localhost:7299
+2023-10-25 22:49:15.611 -06:00 [INF] http://localhost:5232
+2023-10-25 22:49:21.430 -06:00 [INF] User {"Id":"7c8511e6-527a-4566-953e-f5b0c8a701e4","UserName":"test_user","IsAuthenticated":true,"$type":"CurrentUser"} with requestPath /api/v1/Product and method GET
+2023-10-25 22:49:21.618 -06:00 [INF] A new transaction was created with ID "b9385d25-913e-4b89-beac-adbff9734199"
+2023-10-25 22:49:21.655 -06:00 [INF] Commiting Transaction "b9385d25-913e-4b89-beac-adbff9734199"
+2023-10-25 22:49:28.982 -06:00 [INF] User {"Id":"7c8511e6-527a-4566-953e-f5b0c8a701e4","UserName":"test_user","IsAuthenticated":true,"$type":"CurrentUser"} with requestPath /api/v1/Product and method GET
+2023-10-25 22:49:29.021 -06:00 [INF] A new transaction was created with ID "e6aaccf1-dfe1-418e-99c8-7feb29c64553"
+2023-10-25 22:49:29.033 -06:00 [INF] Commiting Transaction "e6aaccf1-dfe1-418e-99c8-7feb29c64553"
+2023-10-25 22:51:48.877 -06:00 [INF] Iniciando Web API
+2023-10-25 22:51:50.977 -06:00 [INF] Corriendo en:
+2023-10-25 22:51:50.980 -06:00 [INF] https://localhost:7299
+2023-10-25 22:51:50.982 -06:00 [INF] http://localhost:5232
+2023-10-25 22:51:57.655 -06:00 [INF] User {"Id":"7c8511e6-527a-4566-953e-f5b0c8a701e4","UserName":"test_user","IsAuthenticated":true,"$type":"CurrentUser"} with requestPath /api/v1/Product and method GET
+2023-10-25 22:51:57.762 -06:00 [INF] A new transaction was created with ID "8da0c1ab-1b92-4518-8b1c-bbe251231c68"
+2023-10-25 22:51:57.804 -06:00 [INF] Commiting Transaction "8da0c1ab-1b92-4518-8b1c-bbe251231c68"
+2023-10-25 22:52:14.287 -06:00 [INF] User {"Id":"7c8511e6-527a-4566-953e-f5b0c8a701e4","UserName":"test_user","IsAuthenticated":true,"$type":"CurrentUser"} with requestPath /api/v1/Product and method GET
+2023-10-25 22:52:14.324 -06:00 [INF] A new transaction was created with ID "28a52217-2bfc-4ef2-abeb-5a758df7c903"
+2023-10-25 22:52:14.337 -06:00 [INF] Commiting Transaction "28a52217-2bfc-4ef2-abeb-5a758df7c903"
+2023-10-25 22:53:35.506 -06:00 [INF] User {"Id":"7c8511e6-527a-4566-953e-f5b0c8a701e4","UserName":"test_user","IsAuthenticated":true,"$type":"CurrentUser"} with requestPath /api/v1/Product and method GET
+2023-10-25 22:53:35.548 -06:00 [INF] A new transaction was created with ID "4d536499-73ef-45cb-b191-1b2d353486b1"
+2023-10-25 22:53:35.557 -06:00 [INF] Commiting Transaction "4d536499-73ef-45cb-b191-1b2d353486b1"
+2023-10-25 22:53:50.452 -06:00 [INF] A new transaction was created with ID "98cd5463-cba5-4867-b7f5-1c2ab4717d35"
+2023-10-25 22:53:50.644 -06:00 [INF] Commiting Transaction "98cd5463-cba5-4867-b7f5-1c2ab4717d35"

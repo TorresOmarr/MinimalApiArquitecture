@@ -1,11 +1,11 @@
 using Api.Common.Interfaces;
 using Api.Extensions;
 using Api.Features;
-using Api.Features.Products;
 using Api.Helpers;
 using Api.Infrastructure.Persistence.SeedData;
 using Api.Services;
 using FluentValidation;
+using Microsoft.ApplicationInsights.Extensibility;
 using Serilog;
 using Serilog.Events;
 
@@ -13,13 +13,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.UseSerilog();
 
-Log.Logger = new LoggerConfiguration()
-    .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
-    .Enrich.FromLogContext()
-    .WriteTo.Console()
-    .WriteTo.File("log.txt", rollingInterval: RollingInterval.Day)
-    .CreateLogger();
 
+builder.Services.AddApplicationInsightsTelemetry();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 builder.Services.AddCustomCors();
 builder.Services.AddPersistence(builder.Configuration);
@@ -30,13 +25,18 @@ builder.Services.AddIdentity();
 builder.Services.AddPolicies();
 builder.Services.AddJWT(builder.Configuration);
 
-
 var app = builder.Build();
 
 app.RegisterEndpointsV1();
 
 
-
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+    .Enrich.FromLogContext()
+    .WriteTo.Console()
+    .WriteTo.ApplicationInsights(app.Services.GetRequiredService<TelemetryConfiguration>(), TelemetryConverter.Traces)
+    .WriteTo.File("log.txt", rollingInterval: RollingInterval.Day)
+    .CreateLogger();
 
 app.UseCors(AppConstants.CorsPolicy);
 app.MapSwagger();
