@@ -2,14 +2,15 @@ using Api.Domain.Entities;
 using Api.Extensions;
 using Api.Infrastructure.Persistence;
 using MediatR;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.Features.Products.Queries.GetProducts;
 
 
-public record GetProductsQuery : IRequest<List<GetProductsQueryResponse>>;
+public record GetProductsQuery : IRequest<Ok<List<GetProductsQueryResponse>>>;
 
-public class GetProductsQueryHandler : IRequestHandler<GetProductsQuery, List<GetProductsQueryResponse>>
+public class GetProductsQueryHandler : IRequestHandler<GetProductsQuery, Ok<List<GetProductsQueryResponse>>>
 {
     private readonly MyAppDbContext _context;
 
@@ -18,10 +19,10 @@ public class GetProductsQueryHandler : IRequestHandler<GetProductsQuery, List<Ge
         _context = context;
     }
 
-    public Task<List<GetProductsQueryResponse>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
+    public async Task<Ok<List<GetProductsQueryResponse>>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
     {
 
-        var response = _context.Products
+        var response = await _context.Products
              .AsNoTracking()
              .Select(s => new GetProductsQueryResponse
              {
@@ -30,7 +31,9 @@ public class GetProductsQueryHandler : IRequestHandler<GetProductsQuery, List<Ge
                  Price = s.Price
              })
              .ToListAsync();
-        return response;
+
+
+        return TypedResults.Ok(response);
     }
 }
 

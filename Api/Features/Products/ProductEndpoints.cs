@@ -27,10 +27,7 @@ public static class ProductEndpoints
         {
             var query = new GetProductsQuery();
             return await mediator.Send(query);
-        })
-        .Produces<List<GetProductsQueryResponse>>()
-
-        ;
+        });
 
 
 
@@ -40,8 +37,7 @@ public static class ProductEndpoints
 
             return await mediator.Send(query);
 
-        })
-        .Produces<GetProductByIdQueryResponse>();
+        });
 
         productsGroup.MapPost("", async ([FromBody] CreateProductCommand command, IMediator mediator) =>
               {

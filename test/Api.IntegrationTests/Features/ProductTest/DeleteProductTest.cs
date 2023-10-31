@@ -12,7 +12,7 @@ public class DeleteProductTest : TestBase
     {
         var (Client, UserId) = await GetClientAsAdmin();
         // Arrange
-        var product = new Product(0, "Description 1", 10.0);
+        var product = Product.Create(productId: 0, description: "Product 01", price: 10.0);
 
         await AddAsync(product);
 
@@ -29,7 +29,7 @@ public class DeleteProductTest : TestBase
     {
         var (Client, UserId) = await GetClientAsDefaultUserAsync();
         // Arrange
-        var product = new Product(0, "Description 1", 10.0);
+        var product = Product.Create(productId: 0, description: "Product 01", price: 10.0);
 
         await AddAsync(product);
 

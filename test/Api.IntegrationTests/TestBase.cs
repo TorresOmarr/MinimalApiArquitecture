@@ -124,11 +124,13 @@ public class TestBase
     {
         var checkpoint = await Respawner.CreateAsync(ApiWebApplication.TestConnectionString, new RespawnerOptions
         {
+
             TablesToIgnore = new Table[]
             {
                 "__EFMigrationsHistory",
                 "AspNetRoles"
-            }
+            },
+
         });
         await checkpoint.ResetAsync(ApiWebApplication.TestConnectionString);
     }

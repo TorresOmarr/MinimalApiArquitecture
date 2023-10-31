@@ -1,3 +1,4 @@
+using System.Net;
 using System.Net.Http.Json;
 using Api.Domain.Entities;
 using Api.Features.Products.Queries.GetProducts;
@@ -13,16 +14,20 @@ public class GetProductTest : TestBase
     public async Task GetProduct_WithUserAdmin()
     {
         //Arrange
-        var product = new Product(0, "Product 1", 10.0);
-        await AddAsync(product);
+        var productToAdd = Product.Create(productId: 0, description: "Product 01", price: 25000);
+        await AddAsync(productToAdd);
 
         var (Client, UserId) = await GetClientAsAdmin();
 
         //Act
-        var products = await Client.GetFromJsonAsync<GetProductsQueryResponse>($"/api/v1/{nameof(Product)}/{product.ProductId}");
+        var product = await Client.GetFromJsonAsync<GetProductsQueryResponse>($"/api/v1/{nameof(Product)}/{productToAdd.ProductId}");
+
         //Assert
-        products.Should().NotBeNull();
-        products?.ProductId.Should().Be(product.ProductId);
+        product.Should().NotBeNull();
+        product?.ProductId.Should().Be(productToAdd.ProductId);
+        product?.Description.Should().Be(productToAdd.Description);
+        product?.Price.Should().Be(productToAdd.Price);
+
     }
 
     //consult a product dosent exist
@@ -44,7 +49,7 @@ public class GetProductTest : TestBase
     public async Task GetProducts_ProducesException_WithAnonymUser()
     {
         //Arrange
-        var product = new Product(0, "Product 1", 10.0);
+        var product = Product.Create(productId: 0, description: "Product 01", price: 25000);
         await AddAsync(product);
 
         var client = Application.CreateClient();
@@ -59,7 +64,7 @@ public class GetProductTest : TestBase
     public async Task GetProducts_ProducesException_WithUserWithOutRolAdmin()
     {
         //Arrange
-        var product = new Product(0, "Product 1", 10.0);
+        var product = Product.Create(productId: 0, description: "Product 01", price: 25000);
         await AddAsync(product);
 
         var client = Application.CreateClient();

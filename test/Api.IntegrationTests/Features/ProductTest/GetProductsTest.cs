@@ -12,8 +12,8 @@ public class GetProductsTest : TestBase
     public async Task GetProducts_WithUserAdmin()
     {
         //Arrange
-        await AddAsync(new Product(0, "Product 1", 10.0));
-        await AddAsync(new Product(0, "Product 2", 20.0));
+        await AddAsync(Product.Create(productId: 0, description: "Product 01", price: 10.0));
+        await AddAsync(Product.Create(productId: 0, description: "Product 02", price: 20.0));
 
         var (Client, UserId) = await GetClientAsAdmin();
 
@@ -28,8 +28,8 @@ public class GetProductsTest : TestBase
     public async Task GetProducts_ProducesException_WithAnonymUser()
     {
         //Arrange
-        await AddAsync(new Product(0, "Product 1", 10.0));
-        await AddAsync(new Product(0, "Product 2", 20.0));
+        await AddAsync(Product.Create(productId: 0, description: "Product 01", price: 10.0));
+        await AddAsync(Product.Create(productId: 0, description: "Product 02", price: 20.0));
 
         var client = Application.CreateClient();
 
@@ -43,8 +43,8 @@ public class GetProductsTest : TestBase
     public async Task GetProducts_ProducesException_WithUserWithOutRolAdmin()
     {
         //Arrange
-        await AddAsync(new Product(0, "Product 1", 10.0));
-        await AddAsync(new Product(0, "Product 2", 20.0));
+        await AddAsync(Product.Create(productId: 0, description: "Product 01", price: 10.0));
+        await AddAsync(Product.Create(productId: 0, description: "Product 02", price: 20.0));
 
         var (Client, UserId) = await GetClientAsDefaultUserAsync();
 

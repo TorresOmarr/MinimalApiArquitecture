@@ -13,8 +13,8 @@ public static class SeddProduct
         {
             context.Products.AddRange(new List<Product>
         {
-            new Product(0,"Product 01",16000),
-            new Product(0,"Product 02",26000)
+            Product.Create(productId: 0, description: "Product 01", price: 25000),
+            Product.Create(productId: 0, description: "Product 02", price: 35000)
         });
 
             await context.SaveChangesAsync();

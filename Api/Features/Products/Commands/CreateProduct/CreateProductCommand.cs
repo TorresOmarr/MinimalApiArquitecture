@@ -34,13 +34,13 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand,
             return Results.ValidationProblem(result.GetValidationProblems());
         }
 
-        var newProduct = new Product(0, command.Description, command.Price);
+        var newProduct = Product.Create(productId: 0, description: command.Description, price: command.Price);
 
         _context.Products.Add(newProduct);
 
         await _context.SaveChangesAsync();
 
-        return Results.Created($"/api/{nameof(Product)}/{newProduct.ProductId}", "");
+        return Results.Created($"/api/{nameof(Product)}/{newProduct.ProductId}", newProduct.ProductId);
     }
 }
 
@@ -48,7 +48,7 @@ public class CreateProductValidator : AbstractValidator<CreateProductCommand>
 {
     public CreateProductValidator()
     {
-        RuleFor(r => r.Description).NotNull();
+        RuleFor(r => r.Description).NotNull().NotEmpty().MaximumLength(150);
         RuleFor(r => r.Price).NotNull().GreaterThan(0);
     }
 }

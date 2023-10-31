@@ -2,13 +2,14 @@ using Api.Domain.Entities;
 using Api.Extensions;
 using Api.Infrastructure.Persistence;
 using MediatR;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace Api.Features.Products.Queries.GetProduct;
 
 
-public record GetProductByIdQuery(int ProductId) : IRequest<IResult>;
+public record GetProductByIdQuery(int ProductId) : IRequest<Results<Ok<GetProductByIdQueryResponse>, NotFound>>;
 
-public class GetProductQueryHandler : IRequestHandler<GetProductByIdQuery, IResult>
+public class GetProductQueryHandler : IRequestHandler<GetProductByIdQuery, Results<Ok<GetProductByIdQueryResponse>, NotFound>>
 {
     private readonly MyAppDbContext _context;
 
@@ -16,12 +17,12 @@ public class GetProductQueryHandler : IRequestHandler<GetProductByIdQuery, IResu
     {
         _context = context;
     }
-    public async Task<IResult> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
+    public async Task<Results<Ok<GetProductByIdQueryResponse>, NotFound>> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
     {
         var product = await _context.Products.FindAsync(request.ProductId);
         if (product is null)
         {
-            return Results.NotFound();
+            return TypedResults.NotFound();
         }
 
 
@@ -32,7 +33,7 @@ public class GetProductQueryHandler : IRequestHandler<GetProductByIdQuery, IResu
             Price = product.Price
         };
 
-        return Results.Ok(productResponse);
+        return TypedResults.Ok(productResponse);
     }
 }
 

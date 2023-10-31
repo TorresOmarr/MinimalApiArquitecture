@@ -13,7 +13,7 @@ public class UpdateProductTest : TestBase
     public async Task Product_IsUpdated_WithValidFields_AndAuthUser()
     {
         // Arrenge
-        var productAdded = new Product(0, "Product 1", 10.0);
+        var productAdded = Product.Create(productId: 0, description: "Product 01", price: 10.0);
         await AddAsync(productAdded);
         var (Client, UserId) = await GetClientAsAdmin();
         var command = new UpdateProductCommand
@@ -41,7 +41,8 @@ public class UpdateProductTest : TestBase
     [Test]
     public async Task Product_IsNotUpdated_WithInvalidFields_AndAuthUser()
     {
-        var productAdded = new Product(0, "Product 1", 10.0);
+        var productAdded = Product.Create(productId: 0, description: "Product 01", price: 10.0);
+        await AddAsync(Product.Create(productId: 0, description: "Product 02", price: 20.0));
         await AddAsync(productAdded);
         var (Client, UserId) = await GetClientAsAdmin();
         var command = new UpdateProductCommand

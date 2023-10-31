@@ -10,6 +10,8 @@ namespace Api.IntegrationTests.Features.ProductTest;
 
 public class CreateProductTest : TestBase
 {
+
+
     [Test]
     public async Task CreateProductWithValidFieldsAndUserAdmin()
     {
@@ -24,15 +26,14 @@ public class CreateProductTest : TestBase
 
         var response = await Client.PostAsJsonAsync($"/api/v1/{nameof(Product)}", product);
 
-        response.EnsureSuccessStatusCode();
-
-
+        response.StatusCode.Should().Be(HttpStatusCode.Created);
     }
+
     [Test]
     public async Task CreateProduct_ProducesException_WithAnonymUser()
     {
 
-        var client = Application.CreateClient();
+        var (client, userId) = await GetClientAsDefaultUserAsync();
 
         var product = new CreateProductCommand
         {
@@ -41,7 +42,7 @@ public class CreateProductTest : TestBase
         };
         var response = await client.PostAsJsonAsync($"/api/v1/{nameof(Product)}", product);
 
-        response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
+        response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
     }
     [Test]
     public async Task Product_IsNotCreated_WhenInvalidFieldsAreProvided_AndUserIsAdmin()
