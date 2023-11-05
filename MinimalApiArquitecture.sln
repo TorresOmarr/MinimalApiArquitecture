@@ -9,6 +9,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{4C5C9308-B
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api.IntegrationTests", "test\Api.IntegrationTests\Api.IntegrationTests.csproj", "{65100721-E832-4EE9-B4E5-7400792E5BFC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api.IntegrationTestsTCXUnit", "test\Api.IntegrationTestsTCXUnit\Api.IntegrationTestsTCXUnit.csproj", "{1F813FCA-9C22-4B18-ACAD-A3CAF97FACD3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -34,8 +36,13 @@ Global
 		{65100721-E832-4EE9-B4E5-7400792E5BFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{65100721-E832-4EE9-B4E5-7400792E5BFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{65100721-E832-4EE9-B4E5-7400792E5BFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F813FCA-9C22-4B18-ACAD-A3CAF97FACD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F813FCA-9C22-4B18-ACAD-A3CAF97FACD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F813FCA-9C22-4B18-ACAD-A3CAF97FACD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F813FCA-9C22-4B18-ACAD-A3CAF97FACD3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{65100721-E832-4EE9-B4E5-7400792E5BFC} = {4C5C9308-B1A3-4042-BD67-6F12B3253193}
+		{1F813FCA-9C22-4B18-ACAD-A3CAF97FACD3} = {4C5C9308-B1A3-4042-BD67-6F12B3253193}
 	EndGlobalSection
 EndGlobal
