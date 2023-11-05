@@ -35,7 +35,6 @@ Log.Logger = new LoggerConfiguration()
     .Enrich.FromLogContext()
     .WriteTo.Console()
     .WriteTo.ApplicationInsights(app.Services.GetRequiredService<TelemetryConfiguration>(), TelemetryConverter.Traces)
-    .WriteTo.File("log.txt", rollingInterval: RollingInterval.Day)
     .CreateLogger();
 
 app.UseCors(AppConstants.CorsPolicy);
