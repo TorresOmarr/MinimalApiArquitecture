@@ -11,7 +11,7 @@ namespace Api.IntegrationTestsTCXUnit;
 
 public class IntergrationTestWebAppFactory : WebApplicationFactory<Api>, IAsyncLifetime
 {
-    private readonly MsSqlContainer _dbContainer = new MsSqlBuilder()
+    protected readonly MsSqlContainer _dbContainer = new MsSqlBuilder()
         .WithImage("mcr.microsoft.com/mssql/server:2019-CU22-ubuntu-20.04")
         .WithPassword("Passw0rd123!")
         .Build();

@@ -2,7 +2,6 @@ using System.Net.Http.Json;
 using Api.Domain.Entities;
 using Api.Features.Products.Queries.GetProducts;
 using FluentAssertions;
-using SQLitePCL;
 
 namespace Api.IntegrationTestsTCXUnit.Features;
 
