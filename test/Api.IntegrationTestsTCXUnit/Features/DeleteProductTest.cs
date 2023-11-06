@@ -1,0 +1,47 @@
+using System.Net;
+using Api.Domain.Entities;
+using Api.IntegrationTestsTCXUnit;
+using FluentAssertions;
+
+
+namespace Api.IntegrationTestsTCXUnit.Features;
+public class DeleteProductTest : BaseIntegrationTest
+{
+    public DeleteProductTest(IntergrationTestWebAppFactory factory) : base(factory)
+    {
+    }
+
+    [Fact]
+    public async Task Product_Delete_WithUserAdmin_Should_Return_Ok_Or_NotFound()
+    {
+        var (Client, UserId) = await GetClientAsAdmin();
+        // Arrange
+        var product = Product.Create(productId: 0, description: "Product 01", price: 10.0);
+
+        await AddAsync(product);
+
+        // Act
+        var responseMustSuccess = await Client.DeleteAsync($"api/v1/product/{product.ProductId}");
+        var responseMustFail = await Client.DeleteAsync($"api/v1/product/0");
+
+        //Asset
+        responseMustSuccess.StatusCode.Should().Be(HttpStatusCode.OK);
+        responseMustFail.StatusCode.Should().Be(HttpStatusCode.NotFound);
+    }
+    [Fact]
+    public async Task Product_Delete_WithUserCommon_Should_Return_Forbidden()
+    {
+        var (Client, UserId) = await GetClientAsDefaultUserAsync();
+        // Arrange
+        var product = Product.Create(productId: 0, description: "Product 01", price: 10.0);
+
+        await AddAsync(product);
+
+        // Act
+        var response = await Client.DeleteAsync($"api/v1/product/{product.ProductId}");
+
+        //Asset
+        response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
+    }
+
+}
