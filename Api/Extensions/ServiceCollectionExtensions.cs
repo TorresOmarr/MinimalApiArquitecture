@@ -51,6 +51,7 @@ public static class ServiceCollectionExtensions
 
     public static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration config)
     {
+
         var connectionString = config.GetConnectionString("Default");
         services.AddDbContext<MyAppDbContext>(options =>
         {

@@ -45,10 +45,10 @@ app.UseAuthorization();
 
 try
 {
+
     Log.Information("Iniciando Web API");
 
     await SeedData.InitializeDataAsync(app.Services);
-
 
     Log.Information("Corriendo en:");
     Log.Information("https://localhost:7299");

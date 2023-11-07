@@ -22,7 +22,7 @@ public class GetProductsQueryHandler : IRequestHandler<GetProductsQuery, Ok<List
     public async Task<Ok<List<GetProductsQueryResponse>>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
     {
 
-        var response = await _context.Products
+        List<GetProductsQueryResponse> products = await _context.Products
              .AsNoTracking()
              .Select(s => new GetProductsQueryResponse
              {
@@ -33,7 +33,7 @@ public class GetProductsQueryHandler : IRequestHandler<GetProductsQuery, Ok<List
              .ToListAsync();
 
 
-        return TypedResults.Ok(response);
+        return TypedResults.Ok(products);
     }
 }
 
